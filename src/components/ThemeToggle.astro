@@ -1,0 +1,67 @@
+<button
+    class="theme-toggle fixed w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-700 border-2 border-solid border-zinc-200 dark:border-zinc-600 z-50 right-3 top-3"
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        class="theme-toggle-sun absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"
+        ><path
+            class="fill-zinc-800 dark:fill-zinc-200"
+            d="M 12 19 a 7 7 0 1 1 0 -14 a 7 7 0 0 1 0 14 Z Z m -5.657 0.157 a 0.75 0.75 0 0 1 0 1.06 l -1.768 1.768 a 0.749 0.749 0 0 1 -1.275 -0.326 a 0.749 0.749 0 0 1 0.215 -0.734 l 1.767 -1.768 a 0.75 0.75 0 0 1 1.061 0 Z M 3.515 3.515 a 0.75 0.75 0 0 1 1.06 0 l 1.768 1.768 a 0.749 0.749 0 0 1 -0.326 1.275 a 0.749 0.749 0 0 1 -0.734 -0.215 L 3.515 4.575 a 0.75 0.75 0 0 1 0 -1.06 Z M 12 0 a 0.75 0.75 0 0 1 0.75 0.75 v 2.5 a 0.75 0.75 0 0 1 -1.5 0 V 0.75 A 0.75 0.75 0 0 1 12 0 Z M 4 12 a 0.75 0.75 0 0 1 -0.75 0.75 H 0.75 a 0.75 0.75 0 0 1 0 -1.5 h 2.5 A 0.75 0.75 0 0 1 4 12 Z m 8 8 a 0.75 0.75 0 0 1 0.75 0.75 v 2.5 a 0.75 0.75 0 0 1 -1.5 0 v -2.5 A 0.75 0.75 0 0 1 12 20 Z m 12 -8 a 0.75 0.75 0 0 1 -0.75 0.75 h -2.5 a 0.75 0.75 0 0 1 0 -1.5 h 2.5 A 0.75 0.75 0 0 1 24 12 Z m -6.343 5.657 a 0.75 0.75 0 0 1 1.06 0 l 1.768 1.768 a 0.751 0.751 0 0 1 -0.018 1.042 a 0.751 0.751 0 0 1 -1.042 0.018 l -1.768 -1.767 a 0.75 0.75 0 0 1 0 -1.061 Z m 2.828 -14.142 a 0.75 0.75 0 0 1 0 1.06 l -1.768 1.768 a 0.751 0.751 0 0 1 -1.042 -0.018 a 0.751 0.751 0 0 1 -0.018 -1.042 l 1.767 -1.768 a 0.75 0.75 0 0 1 1.061 0 Z"
+        ></path></svg
+    >
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        class="theme-toggle-moon absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"
+        ><path
+            class="fill-zinc-800 dark:fill-zinc-200"
+            d="M 14.768 3.96 v 0.001 l -0.002 -0.005 a 9.08 9.08 0 0 0 -0.218 -0.779 c -0.13 -0.394 0.21 -0.8 0.602 -0.67 c 0.29 0.096 0.575 0.205 0.855 0.328 l 0.01 0.005 A 10.002 10.002 0 0 1 12 22 a 10.002 10.002 0 0 1 -9.162 -5.985 l -0.004 -0.01 a 9.722 9.722 0 0 1 -0.329 -0.855 c -0.13 -0.392 0.277 -0.732 0.67 -0.602 c 0.257 0.084 0.517 0.157 0.78 0.218 l 0.004 0.002 A 9 9 0 0 0 14.999 6 a 9.09 9.09 0 0 0 -0.231 -2.04 Z Z"
+        ></path></svg
+    >
+    <style>
+        /*
+         This animation can look kinda cheap and janky
+         buuuuuuuuut I ain't putting any efforts to improve this in the near
+         future atleast
+        */
+        .theme-toggle .theme-toggle-sun,
+        .theme-toggle .theme-toggle-moon {
+            transition: width 500ms ease, height 500ms ease,
+                transform 500ms ease;
+        }
+
+        .theme-toggle.dark .theme-toggle-sun {
+            width: 0;
+            height: 0;
+        }
+
+        .theme-toggle:not(.dark) .theme-toggle-moon {
+            width: 0;
+            height: 0;
+        }
+
+        .theme-toggle:active .theme-toggle-sun,
+        .theme-toggle:active .theme-toggle-moon {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+    </style>
+    <script>
+        const toggle = document.querySelector(".theme-toggle")!;
+        const init = localStorage.getItem("theme")! as "light" | "dark";
+        toggle.classList.add(init);
+        toggle.addEventListener("click", function () {
+            const from = localStorage.getItem("theme")! as "light" | "dark";
+            const to = { light: "dark", dark: "light" }[from] as
+                | "light"
+                | "dark";
+            toggle.classList.remove(from);
+            toggle.classList.add(to);
+            window.themeSet(to);
+        });
+    </script>
+</button>

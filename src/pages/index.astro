@@ -1,15 +1,58 @@
 ---
+import Layout from "../layout/Layout.astro";
+import Blob from "../components/Blob.astro";
+import Badge from "../components/Badge.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+    title="arHSM · @Cats"
+    description="Cats Cats Cats Cats Cats Cats Cats Cats Cats"
+    image="/avatar.png"
+    class="bg-zinc-50 dark:bg-zinc-800 prose prose-zinc dark:prose-invert min-w-full prose-p:font-monospace select-none hyphens-auto"
+>
+    <ThemeToggle />
+    <div
+        class="relative w-full h-screen flex flex-col justify-center items-center"
+    >
+        <h1 class="2xl:text-6xl xl:text-5xl">
+            I'm <b
+                class="bg-gradient-to-tr from-indigo-200 to-violet-300 dark:from-indigo-600 dark:to-violet-500 bg-clip-text text-transparent underline underline-offset-4 decoration-2 decoration-dotted decoration-indigo-200 dark:decoration-indigo-600"
+                >arHSM</b
+            >
+        </h1>
+        <p><i>Student</i> ・ <i>Developer</i> ・ <i>Cat Lover</i></p>
+        <br />
+        <div class="flex gap-3">
+            <Badge
+                name="Discord"
+                href="https://discord.com/users/841509053422632990"
+            />
+            <Badge name="Github" href="https://github.com/arHSM" />
+            <Badge name="Twitter" href="https://twitter.com/_arHSM" />
+        </div>
+        <br />
+        <a
+            class="bg-zinc-100 dark:bg-zinc-700 px-10 py-1 rounded-lg border-solid border-2 border-zinc-200 dark:border-zinc-600 no-underline"
+            href="https://blog.arhsm.cat">Blog <b>🡒</b></a
+        >
+        <div
+            class="absolute w-5 h-10 border-2 border-zinc-600 dark:border-zinc-200 rounded-full flex justify-center bottom-14"
+        >
+            <div
+                class="absolute w-3 h-3 bg-zinc-600 dark:bg-zinc-200 rounded-full bottom-[2px] animate-scroller"
+            >
+            </div>
+        </div>
+
+        <div class="absolute top-0 -z-[1]">
+            <Blob />
+        </div>
+    </div>
+    <!-- Maybe someday add more content here -->
+    <!--
+        <div class="w-full h-screen flex justify-center items-center">
+            <p class="m-0 w-4/5 text-xl">Loading cat...</p>
+        </div>
+    -->
+</Layout>

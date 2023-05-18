@@ -1,0 +1,146 @@
+---
+export interface Props {
+    title: string;
+    description: string;
+    image: string;
+    class: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { title, description, image, class: classNames } = Astro.props;
+
+const imageURL = new URL(image, Astro.url);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Global Metadata -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <!-- Canonical URL -->
+        <link rel="canonical" href={canonicalURL} />
+
+        <!-- Primary Meta Tags -->
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={Astro.url} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={imageURL} />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={Astro.url} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={imageURL} />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap"
+            rel="stylesheet"
+        />
+        <title>{title}</title>
+        <script>
+            declare global {
+                interface Window {
+                    themeListeners: Set<Function>;
+                    themeEmit(changed: "light" | "dark"): void;
+                    themeSet(to: "light" | "dark"): void;
+                }
+            }
+
+            window.themeListeners = new Set();
+
+            window.themeEmit = function (changed) {
+                window.themeListeners.forEach((listner) => {
+                    listner(changed);
+                });
+            };
+
+            window.themeSet = function (to) {
+                switch (to) {
+                    case "dark":
+                        document.documentElement.classList.add("dark");
+                        break;
+                    case "light":
+                        document.documentElement.classList.remove("dark");
+                        break;
+                }
+                localStorage.setItem("theme", to);
+                window.themeEmit(to);
+            };
+
+            if (
+                localStorage.theme === "dark" ||
+                (!localStorage.getItem("theme") &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                window.themeSet("dark");
+            } else {
+                window.themeSet("light");
+            }
+        </script>
+    </head>
+    <body class={classNames}>
+        <slot />
+    </body>
+</html>
+<style is:global>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    @layer utilities {
+        :root {
+            --scrollbar-track-bg: rgb(244 244 245);
+            --scrollbar-thumb-bg: rgb(228 228 231);
+            --scrollbar-thumb-border: rgb(244 244 245);
+            --scrollbar-thumb-hover: rgb(212 212 216);
+        }
+
+        html.dark {
+            --scrollbar-track-bg: rgb(63 63 70);
+            --scrollbar-thumb-bg: rgb(82 82 91);
+            --scrollbar-thumb-border: rgb(63 63 70);
+            --scrollbar-thumb-hover: rgb(113 113 122);
+        }
+
+        *::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: var(--scrollbar-track-bg);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border: 2px solid var(--scrollbar-thumb-border);
+            border-radius: 9999px;
+            background: var(--scrollbar-thumb-bg);
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+    }
+
+    * {
+        scroll-behavior: smooth;
+    }
+</style>
